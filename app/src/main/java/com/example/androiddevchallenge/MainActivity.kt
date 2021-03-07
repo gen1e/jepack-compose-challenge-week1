@@ -18,11 +18,22 @@ package com.example.androiddevchallenge
 import android.os.Bundle
 import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
+import com.example.androiddevchallenge.model.Cat
 import com.example.androiddevchallenge.ui.theme.MyTheme
 
 class MainActivity : AppCompatActivity() {
@@ -36,11 +47,57 @@ class MainActivity : AppCompatActivity() {
     }
 }
 
+fun retrieveCatList(): ArrayList<Cat> {
+    //TODO: replace with cat api call
+    //Dummy data of cats
+    val cats = ArrayList<Cat>()
+    cats.add(Cat("Bob", 100))
+    cats.add(Cat("Loki", 4))
+    cats.add(Cat("Ham", 10))
+    cats.add(Cat("Joob", 5))
+    cats.add(Cat("Joob", 5))
+    cats.add(Cat("Joob", 5))
+    cats.add(Cat("Joob", 5))
+    cats.add(Cat("Joob", 5))
+    cats.add(Cat("Joob", 5))
+    cats.add(Cat("Joob", 5))
+    cats.add(Cat("Joob", 5))
+    cats.add(Cat("Joob", 5))
+    cats.add(Cat("Joob", 5))
+    cats.add(Cat("Joob", 5))
+    return cats
+}
+
 // Start building your app here!
 @Composable
 fun MyApp() {
     Surface(color = MaterialTheme.colors.background) {
-        Text(text = "Ready... Set... GO!")
+        catList(retrieveCatList())
+    }
+}
+
+@Composable
+fun catList(cats: List<Cat>) {
+    LazyColumn(Modifier.fillMaxWidth()) {
+        items(cats) { cat ->
+            catCondensed(cat = cat)
+        }
+
+    }
+}
+
+@Composable
+fun catCondensed(cat: Cat) {
+    Row(Modifier.fillMaxWidth()) {
+        Image(
+            painter = painterResource(id = R.drawable.ic_default_photo),
+            contentDescription = "Picture of ${cat.name}",
+            Modifier.size(100.dp, 100.dp)
+        )
+        Column {
+            Text(text = "Name: ${cat.name}")
+            Text(text = "Age: ${cat.age}")
+        }
     }
 }
 
